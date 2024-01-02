@@ -1,5 +1,10 @@
 #!/usr/bin/python3
-""" Lockboxes Module """
+"""
+Lockboxes Module
+
+This module provides a function 'canUnlockAll'
+to determine if all the boxes can be opened.
+"""
 
 from typing import List
 
