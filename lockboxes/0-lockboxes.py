@@ -5,7 +5,17 @@ from typing import List
 
 
 def canUnlockAll(boxes: List[List[int]]) -> bool:
-    """ Determines if all the boxes can be opened. """
+    """
+    Determines if all the boxes can be opened.
+
+    Args:
+        boxes (List[List[int]]):
+         A list of lists where each inner list represents a box
+           and contains keys to other boxes.
+
+    Returns:
+        bool: True if all boxes can be opened, False otherwise.
+    """
     if not boxes or len(boxes) == 0:
         return False
 
