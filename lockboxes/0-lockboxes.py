@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Lockboxes """
+""" Lockboxes Module """
 
 from typing import List
 
