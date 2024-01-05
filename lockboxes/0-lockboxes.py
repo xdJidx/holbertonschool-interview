@@ -1,49 +1,37 @@
 #!/usr/bin/python3
 """
-Lockboxes Module
-
-This module provides a function 'canUnlockAll'
-to determine if all the boxes can be opened.
+Write a method that determines if all the boxes can be opened.
 """
 
-from typing import List
 
-
-def canUnlockAll(boxes: List[List[int]]) -> bool:
+def canUnlockAll(boxes):
     """
-    Determines if all the boxes can be opened.
+    Determines if all the boxes can be unlocked using the provided keys.
 
-    Args :
-        boxes (List[List[int]]):
-         A list of lists where each inner list represents a box
-           and contains keys to other boxes.
+    Args:
+    - boxes: A list of lists. Each sublist represents a box containing keys
+     to open other boxes.
 
-    Returns :
-        bool: True if all boxes can be opened, False otherwise.
+    Returns:
+    - True if all boxes can be unlocked, else False.
     """
 
-    """Verify if all box are empty or null"""
+    '''Check if the list is empty or null (no boxes to open)'''
     if not boxes or len(boxes) == 0:
         return False
 
-    """Initialize unlocked boxes (the first box is unlocked)"""
-    unlocked_boxes = [False] * len(boxes)
-    unlocked_boxes[0] = True
+    '''Initialize a list of already unlocked boxes, starting with the first box (index 0)'''
+    unlocked_boxes = [0]
 
-    """Initialize available keys with the keys from the first box"""
-    keys = boxes[0]
+    '''Iterate through each unlocked box to find and use the keys'''
+    for box in unlocked_boxes:
+        '''Iterate through each key in the currently open box'''
+        for key in boxes[box]:
+            '''Add the key to the list if it opens a new box'''
+            '''and if the key is within bounds (valid index)'''
+            if key not in unlocked_boxes and key < len(boxes):
+                unlocked_boxes.append(key)
 
-    """Traverse available keys"""
-    while keys:
-        """Take a key from the list"""
-        current_key = keys.pop()
-
-        """Check if the key opens a new unopened box"""
-        if current_key < len(boxes) and not unlocked_boxes[current_key]:
-            """Unlock the corresponding box"""
-            unlocked_boxes[current_key] = True
-            """Add newly found keys"""
-            keys.extend(boxes[current_key])
-
-    """Check if all boxes are unlocked"""
-    return all(unlocked_boxes)
+    '''Compare the number of unlocked boxes to the total number of boxes'''
+    '''Check if all boxes have been opened'''
+    return len(unlocked_boxes) == len(boxes)
