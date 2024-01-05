@@ -20,7 +20,8 @@ def canUnlockAll(boxes):
     if not boxes or len(boxes) == 0:
         return False
 
-    '''Initialize a list of already unlocked boxes, starting with the first box (index 0)'''
+    '''Initialize a list of already unlocked boxes,
+      starting with the first box (index 0)'''
     unlocked_boxes = [0]
 
     '''Iterate through each unlocked box to find and use the keys'''
