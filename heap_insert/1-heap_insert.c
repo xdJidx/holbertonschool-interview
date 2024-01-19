@@ -10,16 +10,23 @@
 heap_t *heapify(heap_t *node)
 {
     int temp;
+    heap_t *largest = node;
 
-    while (node->parent && node->n > node->parent->n)
+    if (node->left && node->left->n > largest->n)
+        largest = node->left;
+
+    if (node->right && node->right->n > largest->n)
+        largest = node->right;
+
+    if (largest != node)
     {
         temp = node->n;
-        node->n = node->parent->n;
-        node->parent->n = temp;
-        node = node->parent;
+        node->n = largest->n;
+        largest->n = temp;
+        return heapify(largest);
     }
 
-    return (node);
+    return node;
 }
 
 /**
@@ -30,36 +37,37 @@ heap_t *heapify(heap_t *node)
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-    heap_t *new_node;
+    heap_t *new_node, *current;
 
     if (!root)
-        return (NULL);
+        return NULL;
 
     new_node = binary_tree_node(NULL, value);
     if (!new_node)
-        return (NULL);
+        return NULL;
 
     if (!*root)
     {
         *root = new_node;
-        return (new_node);
+        return new_node;
     }
 
-    if ((*root)->left == NULL)
+    /* Insert as leftmost available spot in the last level */
+    for (current = *root; current->left && current->right; )
     {
-        (*root)->left = new_node;
-        new_node->parent = *root;
+        if (!current->left->left || !current->left->right)
+            current = current->left;
+        else
+            current = current->right;
     }
-    else if ((*root)->right == NULL)
-    {
-        (*root)->right = new_node;
-        new_node->parent = *root;
-    }
+
+    if (!current->left)
+        current->left = new_node;
     else
-    {
-        (*root)->left->left = new_node;
-        new_node->parent = (*root)->left;
-    }
+        current->right = new_node;
 
-    return (heapify(new_node));
+    new_node->parent = current;
+
+    /* Maintain Max Heap property */
+    return heapify(new_node);
 }
