@@ -1,15 +1,16 @@
-#ifndef _BINARY_TREES_H_
-#define _BINARY_TREES_H_
+#ifndef BINARY_TREES_H
+#define BINARY_TREES_H
 
-#include <stddef.h>
+#include <stdlib.h>
+
 
 /**
- * struct binary_tree_s - Binary tree node
+ * struct binary_tree_s - binary tree node
  *
- * @n: Integer stored in the node
- * @parent: Pointer to the parent node
- * @left: Pointer to the left child node
- * @right: Pointer to the right child node
+ * @n: integer stored in the node
+ * @parent: pointer to the parent node
+ * @left: pointer to the left child node
+ * @right: pointer to the right child node
  */
 typedef struct binary_tree_s
 {
@@ -19,8 +20,28 @@ typedef struct binary_tree_s
 	struct binary_tree_s *right;
 } binary_tree_t;
 typedef struct binary_tree_s heap_t;
-void binary_tree_print(const binary_tree_t *tree);
-heap_t *heap_insert(heap_t **root, int value);
-binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
 
-#endif /* _BINARY_TREES_H_ */
+
+/**
+ * struct tree_queue - linked list
+ * @node: pointer binary tree node
+ * @next: pointer next queue node
+ */
+typedef struct tree_queue
+{
+	struct binary_tree_s *node;
+	struct tree_queue *next;
+} tree_queue;
+
+/* Prototype Functions*/
+void restore_max_heap_property(heap_t **inserted);
+void delete_n_queue(tree_queue **node_queue);
+tree_queue *enqueue(tree_queue **node_queue, heap_t *c_node);
+heap_t *push_insert(heap_t *c_node, tree_queue **node_queue, heap_t **inserted,
+					heap_t **direction, int value);
+void binary_tree_print(const binary_tree_t *);
+binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
+heap_t *heap_insert(heap_t **root, int value);
+heap_t *order(heap_t **root, int value);
+
+#endif /* BINARY_TREES_H */
