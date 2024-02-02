@@ -1,24 +1,12 @@
 #ifndef SANDPILES_H
 #define SANDPILES_H
 
+#include <stdlib.h>
+#include <stdio.h>
 
-/**
- * topple - Topple the sandpile
- * @grid: 3x3 grid
- */
-void topple(int grid[3][3]);
 
-/**
- * print_grid_sum - Print 3x3 grids sum
- * @grid1: Left 3x3 grid
- * @grid2: Right 3x3 grid
- */
-static void print_grid_sum(int grid1[3][3], int grid2[3][3]);
+void sandpiles_sum(int grid1[3][3], int grid2[3][3]);
+void toppling_round(int grid1[3][3], int grid2[3][3]);
+int check_if_grid1_is_stable(int grid1[3][3], int grid2[3][3]);
 
-/**
- * print_grid - Print 3x3 grid
- * @grid: 3x3 grid
- */
-static void print_grid(int grid[3][3]);
-
-#endif /* SANDPILES_H */
+#endif
