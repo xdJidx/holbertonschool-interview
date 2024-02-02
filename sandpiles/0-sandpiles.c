@@ -31,9 +31,11 @@ static void print_grid(int grid[3][3])
  */
 void sum_sanpiles(int grid1[3][3], int grid2[3][3])
 {
-	for (int i = 0; i < 3; i++)
+	int i, j;
+
+    for (i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (j = 0; j < 3; j++)
 			grid1[i][j] += grid2[i][j];
 	}
 }
@@ -47,10 +49,11 @@ void sum_sanpiles(int grid1[3][3], int grid2[3][3])
 int check_if_grid1_is_stable(int grid1[3][3], int grid2[3][3])
 {
 	int stable = 1;
+    int i, j;
 
-	for (int i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (j = 0; j < 3; j++)
 		{
 			grid2[i][j] = grid1[i][j];
 			if (grid1[i][j] > 3)
@@ -70,10 +73,11 @@ int check_if_grid1_is_stable(int grid1[3][3], int grid2[3][3])
  */
 void toppling_round(int grid1[3][3], int grid2[3][3])
 {
+    int i, j;
 
-	for (int i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (j = 0; j < 3; j++)
 		{
 			if (grid2[i][j] > 3)
 			{
