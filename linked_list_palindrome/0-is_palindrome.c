@@ -6,8 +6,6 @@
  * @head: pointer to the head of the list
  * Return: pointer to the new head of the reversed list
  */
-
-
 listint_t *reverse_list(listint_t **head)
 {
     listint_t *prev = NULL;
@@ -25,7 +23,6 @@ listint_t *reverse_list(listint_t **head)
     *head = prev;
     return *head;
 }
-
 
 /**
  * is_palindrome - checks if a singly linked list is a palindrome
@@ -46,10 +43,10 @@ int is_palindrome(listint_t **head)
         fast = fast->next->next;
     }
 
-    // Reverse the second half of the list
+    /* Reverse the second half of the list */
     slow = reverse_list(&slow);
 
-    // Compare the reversed second half with the first half
+    /* Compare the reversed second half with the first half */
     while (slow != NULL)
     {
         if ((*head)->n != slow->n)
