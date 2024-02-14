@@ -1,5 +1,16 @@
 #!/usr/bin/python3
-""" Log parsing """
+#!/usr/bin/python3
+""" Log parsing script.
+
+This script reads input lines from stdin, expecting each line to be in the format:
+<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
+
+After every 10 lines and/or a keyboard interruption (CTRL + C), it prints the following metrics:
+- Total file size: <total size>
+- Number of lines by status code:
+  possible status codes: 200, 301, 400, 401, 403, 404, 405, and 500
+"""
+
 import sys
 import signal
 
