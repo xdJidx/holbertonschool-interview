@@ -1,65 +1,54 @@
 #!/usr/bin/python3
 """
-Log parsing script.
-
-This script reads input lines from stdin, expecting each line to be in the format:
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
-
-After every 10 lines and/or a keyboard interruption (CTRL + C), it prints the following metrics:
-- Total file size: <total size>
-- Number of lines by status code:
-  possible status codes: 200, 301, 400, 401, 403, 404, 405, and 500
+Write a script that reads stdin line by line and computes metrics
 """
-
 import sys
 
+code_status = {
+    200: 0,
+    301: 0,
+    400: 0,
+    401: 0,
+    403: 0,
+    404: 0,
+    405: 0,
+    500: 0}
 
-# Variables to store metrics
-total_file_size = 0
-status_code_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0,
-                      404: 0, 405: 0, 500: 0}
+# Variable to store the total file size
+total_sizes = 0
+# Counter to keep track of the number of lines read
+count_line = 1
 
 
-def print_metrics(signum, frame):
+def printStats():
     """
-    Print metrics and exit the program.
+    Print the final statistics after all lines have been read
     """
-    print(f"File size: {total_file_size}")
-    for code in sorted(status_code_counts):
-        count = status_code_counts[code]
-        if count > 0:
-            print(f"{code}: {count}")
-    sys.exit(0)
+    print('File size: {}'.format(total_sizes))
+    for code in sorted(code_status.keys()):
+        if code_status[code] != 0:
+            print('{}: {}'.format(code, code_status[code]))
+
 
 try:
-    for i, line in enumerate(sys.stdin, start=1):
-        parts = line.strip().split()
+    # Read lines from stdin one by one
+    for line in sys.stdin:
+        try:
+            line = line[:-1]
+            parts = line.split(' ')
+            total_sizes += int(parts[-1])
+            status_code = int(parts[-2])
+            if status_code in code_status:
+                code_status[status_code] += 1
+        except Exception:
+            # Skip the line if it is not in the expected format
+            pass
 
-        # Check if the line follows the specified format
-        if len(parts) == 10 and parts[5] == '"GET' and parts[7].isdigit():
-            file_size = int(parts[7])
-            status_code = int(parts[8])
-
-            # Update metrics
-            total_file_size += file_size
-            status_code_counts[status_code] += 1
-
-            # Print metrics after every 10 lines
-            if i % 10 == 0:
-                print(f"File size: {total_file_size}")
-                for code in sorted(status_code_counts):
-                    count = status_code_counts[code]
-                    if count > 0:
-                        print(f"{code}: {count}")
-                print()
+        if count_line % 10 == 0:
+            printStats()
+        count_line += 1
 
 except KeyboardInterrupt:
-    pass
-
-finally:
-    # Print final metrics on keyboard interruption
-    print(f"File size: {total_file_size}")
-    for code in sorted(status_code_counts):
-        count = status_code_counts[code]
-        if count > 0:
-            print(f"{code}: {count}")
+    printStats()
+    raise
+printStats()
