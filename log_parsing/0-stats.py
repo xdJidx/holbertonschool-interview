@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-#!/usr/bin/python3
-""" Log parsing script.
+"""
+Log parsing script.
 
 This script reads input lines from stdin, expecting each line to be in the format:
 <IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
@@ -12,13 +12,24 @@ After every 10 lines and/or a keyboard interruption (CTRL + C), it prints the fo
 """
 
 import sys
-import signal
 
 
 # Variables to store metrics
 total_file_size = 0
 status_code_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0,
                       404: 0, 405: 0, 500: 0}
+
+
+def print_metrics(signum, frame):
+    """
+    Print metrics and exit the program.
+    """
+    print(f"File size: {total_file_size}")
+    for code in sorted(status_code_counts):
+        count = status_code_counts[code]
+        if count > 0:
+            print(f"{code}: {count}")
+    sys.exit(0)
 
 try:
     for i, line in enumerate(sys.stdin, start=1):
