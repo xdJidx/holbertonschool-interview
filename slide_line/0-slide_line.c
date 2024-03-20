@@ -16,11 +16,12 @@ int slide_line(int *line, size_t size, int direction)
 {
     size_t current, next;
 
-    if (direction != SLIDE_LEFT && direction != SLIDE_RIGHT)
-        return 0; // Failure if direction is invalid
+    if (direction != SLIDE_LEFT && direction != SLIDE_RIGHT) {
+        return 0; /* Failure if direction is invalid */
+    }
 
     if (direction == SLIDE_LEFT) {
-        // Slide and merge to the left
+        /* Slide and merge to the left */
         for (current = 0; current < size; current++) {
             if (line[current] == 0)
                 continue;
@@ -36,18 +37,18 @@ int slide_line(int *line, size_t size, int direction)
                 }
             }
         }
-        // Slide all elements to the left
+        /* Slide all elements to the left */
         for (current = 0, next = 0; current < size; current++) {
             if (line[current] != 0) {
                 line[next++] = line[current];
             }
         }
-        // Fill the rest with zeros
+        /* Fill the rest with zeros */
         for (; next < size; next++) {
             line[next] = 0;
         }
-    } else { // direction == SLIDE_RIGHT
-        // Slide and merge to the right
+    } else { /* direction == SLIDE_RIGHT */
+        /* Slide and merge to the right */
         for (current = size - 1; current < size; current--) {
             if (line[current] == 0)
                 continue;
@@ -63,16 +64,16 @@ int slide_line(int *line, size_t size, int direction)
                 }
             }
         }
-        // Slide all elements to the right
+        /* Slide all elements to the right */
         for (current = size - 1, next = size - 1; current < size; current--) {
             if (line[current] != 0) {
                 line[next--] = line[current];
             }
         }
-        // Fill the rest with zeros
+        /* Fill the rest with zeros */
         for (; next < size; next--) {
             line[next] = 0;
         }
     }
-    return 1; // Success
+    return 1; /* Success */
 }
