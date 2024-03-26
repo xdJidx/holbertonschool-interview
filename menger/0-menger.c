@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <math.h>
 
+/**
+ * @brief Dessine un caractère "#" ou un espace en fonction des coordonnées et de la taille spécifiées.
+ *
+ * Cette fonction affiche un caractère "#" si les coordonnées (x, y) sont à l'intérieur
+ * de la grille de taille size, sinon elle affiche un espace.
+ *
+ * @param size Taille de la grille.
+ * @param x Coordonnée horizontale.
+ * @param y Coordonnée verticale.
+ */
 void draw_char(int size, int x, int y) {
     if ((x >= size) || (y >= size) || (x < 0) || (y < 0)) {
         printf(" ");
@@ -9,6 +19,15 @@ void draw_char(int size, int x, int y) {
     }
 }
 
+/**
+ * @brief Dessine un Menger Sponge de niveau donné.
+ *
+ * Cette fonction dessine un Menger Sponge de niveau donné en utilisant des caractères "#"
+ * pour représenter les cellules remplies et des espaces pour représenter les cellules vides.
+ * Le niveau spécifie le nombre de divisions du Menger Sponge.
+ *
+ * @param level Niveau du Menger Sponge à dessiner.
+ */
 void menger(int level) {
     int size, x, y, div_x, div_y;
 
@@ -36,4 +55,3 @@ void menger(int level) {
         printf("\n");
     }
 }
-
