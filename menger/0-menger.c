@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 
-void draw_char();
-void menger();
 
 void draw_char(int size, int x, int y) {
     if (x >= size || y >= size || x < 0 || y < 0) {
@@ -13,6 +11,8 @@ void draw_char(int size, int x, int y) {
 }
 
 void menger(int level) {
+    int size, x, y, div_x, div_y;
+
     if (level < 0) return;
 
     int size = (int)pow(3, level);
