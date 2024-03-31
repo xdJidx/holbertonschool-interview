@@ -11,7 +11,8 @@
  * @param x Coordonnée horizontale.
  * @param y Coordonnée verticale.
  */
-void draw_char(int size, int x, int y) {
+void draw_char(int size, int x, int y)
+{
     if ((x >= size) || (y >= size) || (x < 0) || (y < 0)) {
         printf(" ");
     } else {
@@ -20,15 +21,11 @@ void draw_char(int size, int x, int y) {
 }
 
 /**
- * @brief Dessine un Menger Sponge de niveau donné.
- *
- * Cette fonction dessine un Menger Sponge de niveau donné en utilisant des caractères "#"
- * pour représenter les cellules remplies et des espaces pour représenter les cellules vides.
- * Le niveau spécifie le nombre de divisions du Menger Sponge.
- *
- * @param level Niveau du Menger Sponge à dessiner.
+ * menger - 2D menger sponge
+ * @level: level of the menger sponge
  */
-void menger(int level) {
+void menger(int level)
+{
     int size, x, y, div_x, div_y;
 
     if (level < 0) return;
