@@ -2,6 +2,7 @@
 """ N-Queens problem solver """
 import sys
 
+
 def is_safe(board, row, col):
     """_summary_
 
@@ -17,6 +18,7 @@ def is_safe(board, row, col):
         if board[i] == col or abs(board[i] - col) == abs(i - row):
             return False
     return True
+
 
 def solve_n_queens(n):
     """_summary_
@@ -44,6 +46,7 @@ def solve_n_queens(n):
     backtrack(0)
     return solutions
 
+
 def print_solutions(solutions):
     """_summary_
 
@@ -52,6 +55,7 @@ def print_solutions(solutions):
     """
     for solution in solutions:
         print(list(map(list, enumerate(solution))))
+
 
 def main():
     """_summary_"""
@@ -71,6 +75,7 @@ def main():
 
     solutions = solve_n_queens(n)
     print_solutions(solutions)
+
 
 if __name__ == "__main__":
     main()
