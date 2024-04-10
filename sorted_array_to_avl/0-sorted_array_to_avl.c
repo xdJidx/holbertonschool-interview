@@ -26,10 +26,12 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 avl_t *sorted_array_to_avl_recursive(int *array, int start, int end,
 	avl_t *parent)
 {
+	int mid;
+
 	if (start > end)
 		return (NULL);
 
-	int mid = (start + end) / 2;
+	mid = (start + end) / 2;
 
 	avl_t *root = malloc(sizeof(avl_t));
 
