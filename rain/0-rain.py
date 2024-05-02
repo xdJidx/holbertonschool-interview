@@ -1,7 +1,23 @@
 #!/usr/bin/python3
 
 def rain(walls):
-    """ Calculate the amount of water retained after raining"""
+    """
+    Calculate the amount of water retained after raining.
+
+    Args:
+    walls (list of int): A list of non-negative integers
+    representing the heights of walls with unit width 1.
+
+    Returns:
+    int: The total amount of rainwater retained.
+
+    Notes:
+    - If the list is empty, it returns 0.
+    - The ends of the list (before index 0 and
+      after index walls[-1]) are not considered
+      walls, meaning they will not retain water.
+    """
+
     if not walls:
         return 0
 
