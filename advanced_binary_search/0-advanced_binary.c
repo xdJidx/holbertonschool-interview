@@ -1,48 +1,46 @@
-#include <stdio.h>
 #include "search_algos.h"
+#include <stdio.h>
 
 /**
- * advanced_binary - Searches for a value in a sorted array of integers
- * @array: Pointer to the first element of the array to search in
- * @size: Number of elements in @array
- * @value: Value to search for
+ * advanced_binary - uses advanced binary search to search for first time
+ * a given value appears in a sorted array using recursion
  *
- * Return: Index where @value is located, or -1 if not found or @array is NULL
+ * @array: pointer to the first element of the sorted array to search in;
+ * array is sorted in ascending order
+ * @size: number of elements in array
+ * @value: the given value to search for
+ *
+ * Return: the first index where value is located, or -1 on failure
  */
 int advanced_binary(int *array, size_t size, int value)
 {
-	size_t low = 0;
-	size_t high = size - 1;
-	size_t i;
+	int half = ((size - 1) / 2), result = 0;
+	size_t i = 0;
 
-	if (array == NULL || size == 0)
+	if (array == NULL || size < 1)
 		return (-1);
 
-	while (low <= high)
+	printf("Searching in array: ");
+	for (i = 0; i < size; i++)
 	{
-		size_t mid = (low + high) / 2;
-
-		printf("Searching in array: ");
-		for (i = low; i <= high; i++)
-		{
-			printf("%d", array[i]);
-			if (i < high)
-				printf(", ");
-		}
-		printf("\n");
-
-		if (array[mid] == value)
-		{
-			if (mid == 0 || array[mid - 1] != value)
-				return (mid);
-			else
-				high = mid - 1;
-		}
-		else if (array[mid] < value)
-			low = mid + 1;
+		printf("%d", array[i]);
+		if (i != (size - 1))
+			printf(", ");
 		else
-			high = mid - 1;
+			printf("\n");
 	}
 
-	return (-1);
+	if (array[half] == value && half == 0)
+		return (half);
+	else if (size == 1)
+		return (-1);
+
+	if (array[half] >= value)
+		return (advanced_binary(array, half + 1, value));
+
+	half++;
+	result = advanced_binary(&array[half], size - half, value);
+	if (result == -1)
+		return (-1);
+	return (half + result);
 }
