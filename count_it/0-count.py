@@ -1,53 +1,78 @@
 #!/usr/bin/python3
-"""Count it!"""
+"""
+Defines recursive function to query the Reddit API,
+parse titles of all hot articles, and print sorted count
+"""
 
-import requests
 
-def count_words(subreddit, word_list, after='', counts=None):
+def count_words(subreddit, word_list, after=None, count={}):
     """
-    Recursively query the Reddit API, parse the titles of all hot articles,
-    and print a sorted count of given keywords.
+    Queries the Reddit API, parses titles of all hot articles,
+    and prints sorted count
+
+    parameters:
+        subreddit: subreddit to query for hot articles
+        word_list: list of keywords to count
+        after: indicates next starting point to get data after
+        count: dictionary of current count of keyword
     """
-    if counts is None:
-        counts = {}
-
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    url = f'https://www.reddit.com/r/{subreddit}/hot.json'
-    params = {'limit': 100, 'after': after}
-
-    response = requests.get(url, headers=headers, params=params)
-    
-    if response.status_code != 200:
-        return
-
-    data = response.json()
-    articles = data.get('data', {}).get('children', [])
-
-    if not articles:
-        return
-
-    for article in articles:
-        title = article['data']['title'].lower().split()
-        
-        for word in word_list:
-            word_lower = word.lower()
-            word_count = title.count(word_lower)
-            if word_lower in counts:
-                counts[word_lower] += word_count
-            else:
-                counts[word_lower] = word_count
-
-    after = data['data'].get('after')
-
-    if after:
-        count_words(subreddit, word_list, after, counts)
+    import json
+    import requests
+    if after is None:
+        sub_URL = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
     else:
-        # Sort and print the results
-        sorted_counts = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
-        for word, count in sorted_counts:
-            if count > 0:
-                print(f"{word}: {count}")
-
-# Exemple d'utilisation :
-if __name__ == '__main__':
-    count_words('programming', ['react', 'python', 'java', 'javascript', 'scala', 'no_results_for_this_one'])
+        sub_URL = 'https://www.reddit.com/r/{}/hot.json?after={}'.format(
+            subreddit, after)
+    subreddit_info = requests.get(sub_URL,
+                                  headers={"user-agent": "user"},
+                                  allow_redirects=False)
+    for word in word_list:
+        word = word.lower()
+        if word not in count.keys():
+            count[word] = 0
+    try:
+        data = subreddit_info.json().get("data")
+    except:
+        return
+    children = data.get("children")
+    for child in children:
+        title = (child.get("data").get("title").lower())
+        title = title.split(' ')
+        for word in word_list:
+            word = word.lower()
+            count[word] += title.count(word)
+    after = data.get("after")
+    if after is not None:
+        return count_words(subreddit, word_list, after, count)
+    result = []
+    for k in count.keys():
+        if count[k] != 0:
+            if result == []:
+                result.append("{}: {}".format(k, count[k]))
+            else:
+                for i in range(len(result)):
+                    if count[k] > int(result[i].split(' ')[1]):
+                        result = result[:i] + \
+                            ["{}: {}".format(k, count[k])] + \
+                            result[i:]
+                        break
+                    elif count[k] == int(result[i].split(' ')[1]):
+                        alpha_list = [k, result[i].split(' ')[0]]
+                        j = 1
+                        if (i + j) >= len(result):
+                            continue
+                        while count[k] == int(result[i + j].split(' ')[1]):
+                            alpha_list.append(result[i + j].split(' ')[0])
+                        alpha_list = alpha_list.sort
+                        for j in range(len(alpha_list)):
+                            if k == alpha_list[j]:
+                                result = result[:i + j] + \
+                                    ["{}: {}".format(k, count[k])] + \
+                                    result[i + j:]
+                    else:
+                        continue
+                else:
+                    result.append("{}: {}".format(k, count[k]))
+    if result != []:
+        for printing in result:
+            print(printing)
