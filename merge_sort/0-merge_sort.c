@@ -51,15 +51,17 @@ void merge(int *array, int *left, int *right, size_t start,
  */
 void top_down_split_merge(int *array, int *temp, size_t start, size_t end)
 {
+	size_t mid, i;
+
 	if (end - start <= 1)
 		return;
 
-	size_t mid = start + (end - start) / 2;
+	mid = start + (end - start) / 2;
 
 	top_down_split_merge(array, temp, start, mid);
 	top_down_split_merge(array, temp, mid, end);
 
-	for (size_t i = start; i < end; i++)
+	for (i = start; i < end; i++)
 		temp[i] = array[i];
 
 	merge(array, temp + start, temp + mid, start, mid, end);
@@ -73,11 +75,12 @@ void top_down_split_merge(int *array, int *temp, size_t start, size_t end)
  */
 void merge_sort(int *array, size_t size)
 {
+	int *temp;
+
 	if (array == NULL || size < 2)
 		return;
 
-	int *temp = malloc(size * sizeof(int));
-
+	temp = malloc(size * sizeof(int));
 	if (temp == NULL)
 	{
 		fprintf(stderr, "Memory allocation failed\n");
