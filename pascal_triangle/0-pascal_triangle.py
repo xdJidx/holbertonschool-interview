@@ -4,8 +4,17 @@ Returns list representing the Pascal's triangle of n
 """
 
 
-def pascal_triangle(n):
-    """returns empty list if n <= 0"""
+def pascal_triangle(n) -> list:
+    """
+    Returns list representing the Pascal's triangle of n
+
+    Args:
+        n (int): number of rows of the triangle
+
+    Returns:
+        List[List[int]]: list of lists of integers representing
+        the Pascal's triangle
+    """
     pascal_list = []
     if n <= 0:
         return pascal_list
