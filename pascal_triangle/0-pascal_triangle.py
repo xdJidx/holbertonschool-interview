@@ -1,19 +1,19 @@
 #!/usr/bin/python3
 """
-Returns list representing the Pascal's triangle of n
+Module pour générer le Triangle de Pascal.
 """
 
 
-def pascal_triangle(n) -> list:
+def pascal_triangle(n):
     """
-    Returns list representing the Pascal's triangle of n
+    Retourne une liste représentant le triangle de Pascal de taille n.
 
     Args:
-        n (int): number of rows of the triangle
+        n (int): Le nombre de lignes du triangle de Pascal à générer.
 
     Returns:
-        List[List[int]]: list of lists of integers representing
-        the Pascal's triangle
+        List[List[int]]: Une liste de listes d'entiers représentant
+        le triangle de Pascal.
     """
     pascal_list = []
     if n <= 0:
@@ -25,4 +25,4 @@ def pascal_triangle(n) -> list:
             row.extend([sum(pair) for pair in zip(last_row, last_row[1:])])
             row.append(1)
         pascal_list.append(row)
-    return (pascal_list)
+    return pascal_list
