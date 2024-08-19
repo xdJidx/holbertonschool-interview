@@ -3,16 +3,6 @@
 
 
 def pascal_triangle(n):
-    """
-    Génère le Triangle de Pascal jusqu'à la n-ième ligne.
-
-    Args:
-        n (int): Le nombre de lignes du Triangle de Pascal à générer.
-
-    Returns:
-        List[List[int]]: Une liste de listes d'entiers représentant
-        le Triangle de Pascal.
-    """
     if n <= 0:
         return []
 
