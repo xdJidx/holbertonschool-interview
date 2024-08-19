@@ -1,17 +1,17 @@
 #!/usr/bin/python3
-"""Triangle de Pascal"""
+""" Triangle de Pascal """
 
 
 def pascal_triangle(n):
     """
-    Generate Pascal's Triangle up to the nth row.
+    Génère le Triangle de Pascal jusqu'à la n-ième ligne.
 
     Args:
-        n (int): The number of rows of the Pascal's Triangle to generate.
+        n (int): Le nombre de lignes du Triangle de Pascal à générer.
 
     Returns:
-        List[List[int]]: A list of lists of integers representing
-        the Pascal's Triangle.
+        List[List[int]]: Une liste de listes d'entiers représentant
+        le Triangle de Pascal.
     """
     if n <= 0:
         return []
@@ -19,10 +19,10 @@ def pascal_triangle(n):
     triangle = []
 
     for i in range(n):
-        # Start each row with a 1
+        # Commencer chaque ligne avec un 1
         row = [1] * (i + 1)
         for j in range(1, i):
-            # Each value is the sum of the two values directly above it
+            # Chaque valeur est la somme des deux valeurs directement au-dessus
             row[j] = triangle[i - 1][j - 1] + triangle[i - 1][j]
         triangle.append(row)
 
